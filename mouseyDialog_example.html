@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  <head>
+    <title>mouseyDialog</title>
+    <style>
+      body {
+        padding:100px;
+      }
+      .mouseyDialog {
+        background:#333;
+        color:#fff;
+        font-size:12px;
+        font-family:verdana,helvetica,arial,sans-serif;
+        padding:10px;
+        position:relative;
+      }
+      .mouseyDialog_close {
+        background:#333;
+        bottom:-15px;
+        color:#ccc;
+        font-size:10px;
+        padding:2px 6px;
+        position:absolute;
+        right:0;
+        text-decoration:none;  
+      }
+      .mouseyDialog_close:hover {
+        color:#ececec;
+        text-decoration:underline; 
+      }
+    </style>
+  </head>
+  <body id="www-frontlinehomeownersinsurance-com">
+    
+    <a href="#example">example</a>
+    <div id="example">
+      This is an example of a mouseyDialog.
+    </div>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="jquery.mouseyDialog.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        // Carousel - custom jQuery plugin
+        $('a[href=#example]').mouseyDialog();
+      });
+    </script>
+  </body>
+</html>
