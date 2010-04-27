@@ -1,4 +1,4 @@
-mouseDialog
+mouseDialog - dialogs - jQuery plugin
 
 mouseyDialog attempts to solve the dialog issue while keeping things simple. The only things required to use it are:
 
