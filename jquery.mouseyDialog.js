@@ -1,73 +1,131 @@
+/*
+jQuery mouseyDialog Plugin
+	* Version 1.0
+	* 2009-03-22 19:30:05
+	* URL: http://github.com/mdbiscan/mouseyDialog
+	* Description: jQuery mouseyDialog Plugin makes dialogs easy
+	* Author: M.Biscan
+	* Copyright: Copyright (c) 2010 M.Biscan
+	* Licence: dual, MIT/GPLv2
+	* requires jQuery1.4.2 and jQueryUI 1.8
+*/
 (function($){
-  jQuery.fn.mouseyDialog = function() {
-    return this.each(function() {
-      var anchor = $(this);
-      var dialog = $(anchor.attr('href'));
-      var button = $('<a href="#" class="mouseyDialog_close">close</a>');
-      
-      setup();
-      bindEvents();
-      
-      function openDialog(x, y) {
-        dialog.css({top:y, left:x}).fadeIn(250, function() {
-          dialog.addClass('visible');
-        });
-      };  
-      
-      function closeDialog() {
-        dialog.fadeOut(250, function() {
-          dialog.removeClass('visible');
-        });
-      };
+  jQuery.fn.mouseyDialog = function(options) {
+    var settings = $.extend({}, { 
+      zIndex:100,
+      addOffset:10,
+      animation:'fade',
+      animationSpeed:250,
+      draggable:false
+    }, options);
     
-      function setup() {
-        button
-          .appendTo(dialog);
+    // Classic Class Structure (note: no var, it's exposed for TDD)
+    MouseyDialog = function(anchor) {
+      this.anchor = $(anchor);
+      this.dialog = $(this.anchor.attr('href'));
+      this.button = $('<a href="#" class="mouseyDialog_close">close</a>');
+    };
+    
+    MouseyDialog.prototype = {          
+      openDialog: function(dialog, x, y) {
+        var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
+        
+    		$(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
+          $(this).addClass('visible');
+        });
+      },
+      closeDialog: function(dialog) {
+        var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
+
+        $(dialog)[animation](settings.animationSpeed, function() {
+          $(this).removeClass('visible');
+        });
+      },
+      setup: function() {        
+        this.button
+          .appendTo(this.dialog);
           
-        dialog
+        this.dialog
           .hide()
-          .css({position:'absolute'})
+          .css({position:'absolute', zIndex:settings.zIndex})
           .addClass('mouseyDialog')
           .appendTo('body');
-      }
-
-      function bindEvents() {
+          
+        if(settings.draggable) {
+          this.dialog.draggable();
+        }
+      },
+      bindEvents: function() {
+        var that = this;
+        
         // Custom event
-        anchor.bind('toggleDialog', function(event, x, y) {
-          if(dialog.hasClass('visible')) {
-            closeDialog();
+        this.anchor.bind('toggleDialog', function(event, x, y) {
+          if(that.dialog.hasClass('visible')) {
+            that.closeDialog(that.dialog);
           } else {
-            openDialog(x, y);
+            that.openDialog(that.dialog, x, y);
           }
         });
 
         // Events
-        anchor.click(function(mouse) {
-          var x = mouse.pageX+10;
-          var y = mouse.pageY+10;
-
+        this.anchor.click(function(mouse) {
+          var windowWidth = $(window).width();
+          var windowHeight = $(window).height();
+          
+          var dialogWidth = that.dialog.innerWidth();
+          var dialogHeight = that.dialog.height() + that.dialog.innerHeight();
+          
+          var browserHeight = mouse.screenY;
+          var browserWidth = mouse.screenX;
+          
+          var browserX = browserWidth+dialogWidth;
+          var browserY = browserHeight+dialogHeight;
+          
+          if(browserX >= windowWidth) {
+            var x = mouse.pageX-settings.addOffset-(dialogWidth);
+          } else {
+            var x = mouse.pageX+settings.addOffset;
+          }
+          if(browserY >= windowHeight) {
+            var y = mouse.pageY-settings.addOffset-(dialogHeight);
+          } else {
+            var y = mouse.pageY+settings.addOffset;
+          }
+          
           $(this).trigger('toggleDialog', [x, y]);
+
+          var openDialog = $('.mouseyDialog.visible');
+          if(openDialog.length == 1 && openDialog != that.dialog) {
+            that.closeDialog(openDialog);
+          }
           return false;
         });
-        button.click(function() {
-          anchor.trigger('toggleDialog');
+        
+        this.button.click(function() {
+          that.anchor.trigger('toggleDialog');
           return false; 
         });
 
         // Prevents the dialog from being closed when clicking inside it
-        dialog.click(function(event) {
+        this.dialog.click(function(event) {
           event.stopPropagation();
         });
         // Closes the dialog when clicking outside of it
         $(document).click(function(event) {
           if(event.target != this) {
-            if(dialog.hasClass('visible')) {
-              closeDialog();
-              event.preventDefault();
+            if(that.dialog.hasClass('visible')) {
+              that.closeDialog(that.dialog);
             }
           } 
         });
-      };
+      }
+    };
+
+    // jQuery Distribution
+    return this.each(function() {
+      var mouseyDialog = new MouseyDialog(this);
+      mouseyDialog.setup();
+      mouseyDialog.bindEvents();
     });
   };
 })(jQuery);
