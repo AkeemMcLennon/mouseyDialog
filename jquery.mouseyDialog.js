@@ -1,13 +1,13 @@
 /*
 jQuery mouseyDialog Plugin
-	* Version 1.0
-	* 2009-03-22 19:30:05
-	* URL: http://github.com/mdbiscan/mouseyDialog
-	* Description: jQuery mouseyDialog Plugin makes dialogs easy
-	* Author: M.Biscan
-	* Copyright: Copyright (c) 2010 M.Biscan
-	* Licence: dual, MIT/GPLv2
-	* requires jQuery1.4.2 and jQueryUI 1.8
+  * Version 1.0
+  * 2009-03-22 19:30:05
+  * URL: http://github.com/mdbiscan/mouseyDialog
+  * Description: jQuery mouseyDialog Plugin makes dialogs easy
+  * Author: M.Biscan
+  * Copyright: Copyright (c) 2010 M.Biscan
+  * Licence: dual, MIT/GPLv2
+  * requires jQuery1.4.2 and jQueryUI 1.8
 */
 (function($){
   jQuery.fn.mouseyDialog = function(options) {
@@ -29,8 +29,8 @@ jQuery mouseyDialog Plugin
     MouseyDialog.prototype = {          
       openDialog: function(dialog, x, y) {
         var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
-        
-    		$(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
+
+        $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
           $(this).addClass('visible');
         });
       },

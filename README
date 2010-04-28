@@ -9,9 +9,8 @@ The CSS is left to your own design. mouseyDialog only adds position declarations
 
 Future possibilities:
 
+Ajax Support
 Options
  - set for click or hover event
  - set a number of containers to help solve design solutions
- - animation type
- - animation speed
- - additional offset math
+ - modal v.s. dialog
