@@ -1,11 +1,16 @@
 (function($){
-  $.fn.mouseyDialog = function(options) {
-    $settings = $.extend({}, $.fn.mouseyDialog.defaults, options);  
+  $.fn.mouseyDialog = function(options) { 
+    var settings = $.extend({}, $.fn.mouseyDialog.defaults, options); 
     
     return this.each(function() {
       $anchor = $(this);
       $dialog = $($anchor.attr('href'));
       $closeButton = $('<a href="#" class="mouseyDialog_close">close</a>');
+      $zIndex = settings.zIndex;
+      $addOffset = settings.addOffset;
+      $animation = settings.animation;
+      $animationSpeed = settings.animationSpeed;
+      $draggable = settings.draggable;
 
       setup();
       bindEvents();
@@ -19,11 +24,11 @@
       
     $dialog
       .hide()
-      .css({position:'absolute', zIndex:$settings.zIndex})
+      .css({position:'absolute', zIndex:$zIndex})
       .addClass('mouseyDialog')
       .appendTo('body');
       
-    if($settings.draggable) {
+    if($draggable) {
       $dialog.draggable();
     }
   };
@@ -53,16 +58,15 @@
       var browserY = browserHeight+dialogHeight;
       
       if(browserX >= windowWidth) {
-        var x = mouse.pageX-$settings.addOffset-(dialogWidth);
+        var x = mouse.pageX-$addOffset-(dialogWidth);
       } else {
-        var x = mouse.pageX+$settings.addOffset;
+        var x = mouse.pageX+$addOffset;
       }
       if(browserY >= windowHeight) {
-        var y = mouse.pageY-$settings.addOffset-(dialogHeight);
+        var y = mouse.pageY-$addOffset-(dialogHeight);
       } else {
-        var y = mouse.pageY+$settings.addOffset;
+        var y = mouse.pageY+$addOffset;
       }
-      
       $(this).trigger('toggleDialog', [x, y]);
 
       var openDialog = $('.mouseyDialog.visible');
@@ -92,17 +96,17 @@
   };
   
   function openDialog(dialog, x, y) {
-    var animation = ($settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
+    var animation = ($animation == 'slide' ? 'slideDown' : 'fadeIn');
 
-    $(dialog).css({top:y, left:x})[animation]($settings.animationSpeed, function() {
+    $(dialog).css({top:y, left:x})[animation]($animationSpeed, function() {
       $(this).addClass('visible');
     });
   };
   
   function closeDialog(dialog) {
-    var animation = ($settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
+    var animation = ($animation == 'slide' ? 'slideUp' : 'fadeOut');
 
-    $(dialog)[animation]($settings.animationSpeed, function() {
+    $(dialog)[animation]($animationSpeed, function() {
       $(this).removeClass('visible');
     });
   };
