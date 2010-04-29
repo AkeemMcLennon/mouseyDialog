@@ -6,7 +6,6 @@
       $anchor = $(this);
       $dialog = $($anchor.attr('href'));
       $closeButton = $('<a href="#" class="mouseyDialog_close">close</a>');
-      console.log($anchor);
 
       setup();
       bindEvents();
