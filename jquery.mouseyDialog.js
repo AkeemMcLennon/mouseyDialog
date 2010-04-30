@@ -110,23 +110,23 @@ jQuery simpleCarousel Plugin
           }
         } 
       });
-      
-      function openDialog(dialog, x, y) {
-        var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
-
-        $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
-          $(this).addClass('visible');
-        });
-      };
-
-      function closeDialog(dialog) {
-        var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
-
-        $(dialog)[animation](settings.animationSpeed, function() {
-          $(this).removeClass('visible');
-        });
-      };
     });
+    
+    function openDialog(dialog, x, y) {
+      var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
+
+      $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
+        $(this).addClass('visible');
+      });
+    };
+
+    function closeDialog(dialog) {
+      var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
+
+      $(dialog)[animation](settings.animationSpeed, function() {
+        $(this).removeClass('visible');
+      });
+    };
   };
   
   // Default values
