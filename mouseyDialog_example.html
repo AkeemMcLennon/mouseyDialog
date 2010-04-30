@@ -31,9 +31,14 @@
   </head>
   <body>
     
-    <a href="#example">example</a>
-    <div id="example">
+    <a href="#example1" class="js_mouseyDialog">example</a>
+    <div id="example1">
       This is an example of a mouseyDialog.
+    </div>
+    
+    <a href="#example2" class="js_mouseyDialog">example</a>
+    <div id="example2">
+      This is another example of mouseyDialog. It's just here to have more than one on the page for testing purposes.
     </div>
     
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -47,7 +52,7 @@
         // animation:'fade',
         // animationSpeed:250,
         // draggable:false
-        $('a[href=#example]').mouseyDialog();
+        $('.js_mouseyDialog').mouseyDialog();
       });
     </script>
   </body>
