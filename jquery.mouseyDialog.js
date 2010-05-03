@@ -32,11 +32,13 @@ jQuery simpleCarousel Plugin
     var settings = $.extend({}, $.fn.mouseyDialog.defaults, options); 
     
     return this.each(function() {
-      var $anchor = $(this);
-      var $dialog = $($anchor.attr('href'));
-      var $closeButton = $('<a href="#" class="mouseyDialog_close">close</a>');
+      var $anchor = $(this),
+          $dialog = $($anchor.attr('href')),
+          $closeButton = $('<a href="#" class="mouseyDialog_close">close</a>');
 
-      // Setup
+     ///////////
+     // Setup //
+     ///////////
      $closeButton
         .appendTo($dialog);
 
@@ -50,7 +52,9 @@ jQuery simpleCarousel Plugin
         $dialog.draggable();
       }
       
-      // Events
+      ////////////
+      // Events //
+      ////////////
       // Custom event
       $anchor.bind('toggleDialog', function(event, x, y) {
         if($dialog.hasClass('visible')) {
@@ -59,20 +63,19 @@ jQuery simpleCarousel Plugin
           openDialog($dialog, x, y);
         }
       });
-
-      // Events
+      
       $anchor.click(function(mouse) {
-        var windowWidth = $(window).width();
-        var windowHeight = $(window).height();
+        var windowWidth = $(window).width(),
+            windowHeight = $(window).height();
 
-        var dialogWidth = $dialog.innerWidth();
-        var dialogHeight = $dialog.height() + $dialog.innerHeight();
+        var dialogWidth = $dialog.innerWidth(),
+            dialogHeight = $dialog.height() + $dialog.innerHeight();
 
-        var browserHeight = mouse.screenY;
-        var browserWidth = mouse.screenX;
+        var browserHeight = mouse.screenY,
+            browserWidth = mouse.screenX;
 
-        var browserX = browserWidth+dialogWidth;
-        var browserY = browserHeight+dialogHeight;
+        var browserX = browserWidth+dialogWidth,
+            browserY = browserHeight+dialogHeight;
 
         if(browserX >= windowWidth) {
           var x = mouse.pageX-settings.addOffset-(dialogWidth);
@@ -112,6 +115,9 @@ jQuery simpleCarousel Plugin
       });
     });
     
+    ///////////////////////
+    // Private functions //
+    ///////////////////////
     function openDialog(dialog, x, y) {
       var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
 
@@ -128,8 +134,10 @@ jQuery simpleCarousel Plugin
       });
     };
   };
-  
-  // Default values
+
+  ////////////////////
+  // Default optons //
+  ////////////////////
   $.fn.mouseyDialog.defaults = {
     zIndex:100,
     addOffset:10,
