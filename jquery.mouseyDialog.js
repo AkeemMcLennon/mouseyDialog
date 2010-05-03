@@ -65,28 +65,28 @@ jQuery mouseyDialog Plugin
       });
       
       $anchor.click(function(mouse) {
+            // Window
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
-
+            // Dialog
         var dialogWidth = $dialog.innerWidth(),
-            dialogHeight = $dialog.height() + $dialog.innerHeight();
+            dialogHeight = $dialog.innerHeight();
+            // Mouse 
+        var mouseX = mouse.pageX, 
+            mouseY = mouse.pageY;
 
-        var browserHeight = mouse.screenY,
-            browserWidth = mouse.screenX;
-
-        var browserX = browserWidth+dialogWidth,
-            browserY = browserHeight+dialogHeight;
-
-        if(browserX >= windowWidth) {
-          var x = mouse.pageX-settings.addOffset-(dialogWidth);
+        if((dialogWidth + mouseX) >= windowWidth) {
+          var x = mouseX-settings.addOffset-dialogWidth;
         } else {
-          var x = mouse.pageX+settings.addOffset;
+          var x = mouseX+settings.addOffset;
         }
-        if(browserY >= windowHeight) {
-          var y = mouse.pageY-settings.addOffset-(dialogHeight);
+
+        if((dialogHeight + mouseY) >= windowHeight) {
+          var y = mouseY-settings.addOffset-dialogHeight;
         } else {
-          var y = mouse.pageY+settings.addOffset;
+          var y = mouseY+settings.addOffset;
         }
+
         $(this).trigger('toggleDialog', [x, y]);
 
         var openDialog = $('.mouseyDialog.visible');
