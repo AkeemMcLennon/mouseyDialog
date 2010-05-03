@@ -1,8 +1,8 @@
 /*
-jQuery simpleCarousel Plugin
+jQuery mouseyDialog Plugin
   * Version 1.0
   * 04-30-2010
-  * URL: http://github.com/mdbiscan/simpleCarousel
+  * URL: http://github.com/mdbiscan/mouseyDialog
   * Author: M.Biscan
   * requires jQuery1.4.2 & jQueryUI 1.8 (for draggable())
   

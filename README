@@ -1,16 +1,3 @@
-mouseDialog - dialogs - jQuery plugin
+An easy-to-use jQuery plugin for dialogs, centered around the mouse position.
 
-mouseyDialog attempts to solve the dialog issue while keeping things simple. The only things required to use it are:
-
-1. An anchor with an href book mark
-2. A corresponding ID on an element
-
-The CSS is left to your own design. mouseyDialog only adds position declarations to the dialog.
-
-Future possibilities:
-
-Ajax Support
-Options
- - set for click or hover event
- - set a number of containers to help solve design solutions
- - modal v.s. dialog
+Copyright © 2010 M.Biscan, released under the MIT license.
