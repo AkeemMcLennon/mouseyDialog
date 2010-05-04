@@ -64,7 +64,9 @@ jQuery mouseyDialog Plugin
         }
       });
       
-      $anchor.click(function(mouse) {
+      var eventType = (settings.eventType == 'hover' ? 'mouseenter' : 'click');
+      
+      $anchor[eventType](function(mouse) {
             // Window
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
@@ -95,24 +97,30 @@ jQuery mouseyDialog Plugin
         }
         return false;
       });
+      
+      if(settings.eventType == 'hover') {
+        $anchor.mouseleave(function() {
+          closeDialog($dialog);
+        });
+      } else {
+        $closeButton.click(function() {
+          $anchor.trigger('toggleDialog');
+          return false; 
+        });
 
-      $closeButton.click(function() {
-        $anchor.trigger('toggleDialog');
-        return false; 
-      });
-
-      // Prevents the dialog from being closed when clicking inside it
-      $dialog.click(function(event) {
-        event.stopPropagation();
-      });
-      // Closes the dialog when clicking outside of it
-      $(document).click(function(event) {
-        if(event.target != this) {
-          if($dialog.hasClass('visible')) {
-            closeDialog($dialog);
-          }
-        } 
-      });
+        // Prevents the dialog from being closed when clicking inside it
+        $dialog.click(function(event) {
+          event.stopPropagation();
+        });
+        // Closes the dialog when clicking outside of it
+        $(document).click(function(event) {
+          if(event.target != this) {
+            if($dialog.hasClass('visible')) {
+              closeDialog($dialog);
+            }
+          } 
+        });
+      }
     });
     
     ///////////////////////
@@ -140,6 +148,7 @@ jQuery mouseyDialog Plugin
   ////////////////////
   $.fn.mouseyDialog.defaults = {
     zIndex:100,
+    eventType:'click',
     addOffset:10,
     animation:'fade',
     animationSpeed:250,
