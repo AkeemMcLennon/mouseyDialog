@@ -71,26 +71,24 @@ jQuery mouseyDialog Plugin
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
             // Dialog
-        var dialogWidth = $dialog.innerWidth(),
-            dialogHeight = $dialog.innerHeight();
+        var dialogWidth = getDialogDimensions().width,
+            dialogHeight = getDialogDimensions().height;
             // Mouse 
         var mouseX = mouse.pageX, 
             mouseY = mouse.pageY;
-
+            // X, Y
+        var x = mouseX+settings.addOffset,
+            y = mouseY+settings.addOffset;
+            
         if((dialogWidth + mouseX) >= windowWidth) {
-          var x = mouseX-settings.addOffset-dialogWidth;
-        } else {
-          var x = mouseX+settings.addOffset;
-        }
-
+          x = mouseX-settings.addOffset-dialogWidth;
+        } 
         if((dialogHeight + mouseY) >= windowHeight) {
-          var y = mouseY-settings.addOffset-dialogHeight;
-        } else {
-          var y = mouseY+settings.addOffset;
+          y = mouseY-settings.addOffset-dialogHeight;
         }
-
+        
         $(this).trigger('toggleDialog', [x, y]);
-
+        
         var openDialog = $('.mouseyDialog.visible');
         if(openDialog.length == 1 && openDialog != $dialog) {
           closeDialog(openDialog);
@@ -121,26 +119,37 @@ jQuery mouseyDialog Plugin
           } 
         });
       }
+      
+      ///////////////////////
+      // Private functions //
+      ///////////////////////
+      function getDialogDimensions() {
+        $dialog.show();
+        
+        var height = $dialog.innerHeight(),
+            width = $dialog.innerWidth();
+        
+        $dialog.hide();
+        
+        return {height:height, width:width};
+      };
+      
+      function openDialog(dialog, x, y) {
+        var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
+
+        $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
+          $(this).addClass('visible');
+        });
+      };
+
+      function closeDialog(dialog) {
+        var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
+
+        $(dialog)[animation](settings.animationSpeed, function() {
+          $(this).removeClass('visible');
+        });
+      };
     });
-    
-    ///////////////////////
-    // Private functions //
-    ///////////////////////
-    function openDialog(dialog, x, y) {
-      var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
-
-      $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
-        $(this).addClass('visible');
-      });
-    };
-
-    function closeDialog(dialog) {
-      var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
-
-      $(dialog)[animation](settings.animationSpeed, function() {
-        $(this).removeClass('visible');
-      });
-    };
   };
 
   ////////////////////
