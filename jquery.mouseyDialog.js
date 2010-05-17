@@ -4,7 +4,7 @@ jQuery mouseyDialog Plugin
   * 04-30-2010
   * URL: http://github.com/mdbiscan/mouseyDialog
   * Author: M.Biscan
-  * requires jQuery1.4.2 & jQueryUI 1.8 (for draggable())
+  * requires jQuery1.4.2
   
   Copyright (c) 2010 M.Biscan
 
@@ -47,10 +47,6 @@ jQuery mouseyDialog Plugin
         .css({position:'absolute', zIndex:settings.zIndex})
         .addClass('mouseyDialog')
         .appendTo('body');
-
-      if(settings.draggable) {
-        $dialog.draggable();
-      }
       
       ////////////
       // Events //
@@ -160,7 +156,6 @@ jQuery mouseyDialog Plugin
     eventType:'click',
     addOffset:10,
     animation:'fade',
-    animationSpeed:250,
-    draggable:false
+    animationSpeed:250
   };
 })(jQuery);
