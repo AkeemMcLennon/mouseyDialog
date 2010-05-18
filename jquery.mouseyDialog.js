@@ -93,9 +93,25 @@ jQuery mouseyDialog Plugin
       });
       
       if(settings.eventType == 'hover') {
-        $anchor.mouseleave(function() {
-          closeDialog($dialog);
+        $anchor.click(function() {
+          return false;
         });
+        $anchor.mouseleave(function() {
+          setTimeout(function() {
+            if(!$dialog.hasClass('hover')) {
+              closeDialog($dialog);
+            }
+          }, 150);
+        });
+        $dialog.hover(
+          function() {
+            $(this).addClass('hover');
+          }, 
+          function() {
+            $(this).removeClass('hover');
+            closeDialog(this);
+          }
+        );
       } else {
         $closeButton.click(function() {
           $anchor.trigger('toggleDialog');
