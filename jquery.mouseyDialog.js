@@ -62,25 +62,28 @@ jQuery mouseyDialog Plugin
       
       var eventType = (settings.eventType == 'hover' ? 'mouseenter' : 'click');
       
-      $anchor[eventType](function(mouse) {
+      $anchor[eventType](function(event) {
             // Window
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
+            // Screen
+        var clientX = event.clientX, 
+            clientY = event.clientY;
             // Dialog
         var dialogWidth = getDialogDimensions().width,
             dialogHeight = getDialogDimensions().height;
             // Mouse 
-        var mouseX = mouse.pageX, 
-            mouseY = mouse.pageY;
+        var mouseX = event.pageX, 
+            mouseY = event.pageY;
             // X, Y
         var x = mouseX+settings.addOffset,
             y = mouseY+settings.addOffset;
             
-        if((dialogWidth + mouseX) >= windowWidth) {
-          x = mouseX-settings.addOffset-dialogWidth;
+        if((dialogWidth + clientX) > windowWidth) {
+          x = mouseX-settings.addOffset-((dialogWidth + clientX)-windowWidth);
         } 
-        if((dialogHeight + mouseY) >= windowHeight) {
-          y = mouseY-settings.addOffset-dialogHeight;
+        if((dialogHeight + clientY) > windowHeight) {
+          y = mouseY-settings.addOffset-((dialogHeight + clientY)-windowHeight);
         }
         
         $(this).trigger('toggleDialog', [x, y]);
