@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+  <head>
+    <title>mouseyDialog</title>
+    <style>
+      .container {
+        float:left;
+        margin:200px;
+      }
+      .mouseyDialog {
+        background:#333;
+        color:#fff;
+        font-size:12px;
+        font-family:verdana,helvetica,arial,sans-serif;
+        padding:20px;
+        position:relative;
+        width:120px;
+        opacity:.80;
+        filter:alpha(opacity=80);
+        -moz-border-radius:10px;
+        -webkit-border-radius:10px;
+      }
+      .mouseyDialog_close {
+        background:#333;
+        bottom:-10px;
+        color:#ccc;
+        font-size:10px;
+        padding:4px 6px;
+        position:absolute;
+        right:0;
+        text-decoration:none;  
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+      }
+      .mouseyDialog_close:hover {
+        color:#ececec;
+        text-decoration:underline; 
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">    
+      <a href="#example1" class="js_mouseyDialog one">example 1</a>
+      <div id="example1">
+        This is an example of a mouseyDialog.
+      </div>
+      
+      <a href="#example2" class="js_mouseyDialog one">example 2</a>
+      <div id="example2">
+        This is another example. See how easy this is?
+      </div>
+    </div>
+    
+    <div class="container">    
+      <a href="#example3" class="js_mouseyDialog two">example 3</a>
+      <div id="example3">
+        This is another example of mouseyDialog. It's just here to have more than one on the page for testing purposes. Keep reading, because I'm blabbering on to make this longer.
+      </div>
+    </div>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.mouseyDialog.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        // Options (defaults):
+        // zIndex:100,
+        // eventType:'click',
+        // addOffset:10,
+        // animation:'fade',
+        // animationSpeed:250
+        $('.one').mouseyDialog();
+        
+        $('.two').mouseyDialog({
+          eventType:'hover',
+          animation:'slide',
+          animationSpeed:100
+        });
+      });
+    </script>
+  </body>
+</html>
