@@ -33,8 +33,9 @@ jQuery mouseyDialog Plugin
    
     return this.each(function() { 
       var $anchor = $(this),
-          $dialog = $($anchor.attr('href'));
-
+          $url = $anchor.attr('href'),
+          $dialog = getID($url);
+          
       if(settings.eventType == 'click') {
         var $closeButton = $('<a href="#" class="mouseyDialog_close">close</a>').appendTo($dialog);
       }
@@ -138,6 +139,11 @@ jQuery mouseyDialog Plugin
       ///////////////////////
       // Private functions //
       ///////////////////////
+      function getID(url) {
+        var id = url.split("#");       
+        return $('#' + id[1]);
+      };
+      
       function getDialogDimensions() {
         $dialog.show();
         
