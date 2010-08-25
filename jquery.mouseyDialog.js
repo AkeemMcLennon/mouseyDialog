@@ -30,8 +30,8 @@ jQuery mouseyDialog Plugin
 (function($){
   $.fn.mouseyDialog = function(options) { 
     var settings = $.extend({}, $.fn.mouseyDialog.defaults, options); 
-    
-    return this.each(function() {
+   
+    return this.each(function() { 
       var $anchor = $(this),
           $dialog = $($anchor.attr('href'));
 
@@ -45,7 +45,7 @@ jQuery mouseyDialog Plugin
       $dialog
         .hide()
         .css({position:'absolute', zIndex:settings.zIndex})
-        .addClass('mouseyDialog')
+        .addClass(settings.customClass)
         .appendTo('body');
       
       ////////////
@@ -175,6 +175,7 @@ jQuery mouseyDialog Plugin
     eventType:'click',
     addOffset:10,
     animation:'fade',
-    animationSpeed:250
+    animationSpeed:250,
+    customClass:'mouseyDialog'
   };
 })(jQuery);
