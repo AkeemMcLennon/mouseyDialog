@@ -53,13 +53,31 @@ jQuery mouseyDialog Plugin
       // Events //
       ////////////
       // Custom event
-      $anchor.bind('toggleDialog', function(event, x, y) {
-        if($dialog.hasClass('visible')) {
-          closeDialog($dialog);
-        } else {
-          openDialog($dialog, x, y);
-        }
-      });
+      $anchor
+        .bind('toggleDialog', function(event, x, y) {
+          var timeout = 0;
+          if(settings.eventType == 'hover') {
+            timeout = 250;
+          }
+                
+          if($dialog.hasClass('visible')) {
+            closeDialog($dialog);
+          } else {
+            setTimeout(function() {
+              if($anchor.hasClass('hover')) {
+                openDialog($dialog, x, y);
+              }
+            }, timeout);
+          }
+        })
+        .hover(
+          function() {
+            $(this).addClass('hover');
+          }, 
+          function() {
+            $(this).removeClass('hover');
+          }
+        );
       
       var eventType = (settings.eventType == 'hover' ? 'mouseenter' : 'click');
       
@@ -157,7 +175,6 @@ jQuery mouseyDialog Plugin
       
       function openDialog(dialog, x, y) {
         var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
-
         $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
           $(this).addClass('visible');
         });
@@ -165,7 +182,6 @@ jQuery mouseyDialog Plugin
 
       function closeDialog(dialog) {
         var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
-
         $(dialog)[animation](settings.animationSpeed, function() {
           $(this).removeClass('visible');
         });
