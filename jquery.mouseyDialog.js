@@ -115,9 +115,11 @@ jQuery mouseyDialog Plugin
       });
       
       if(settings.eventType == 'hover') {
-        $anchor.click(function() {
-          return false;
-        });
+        if(settings.source == 'href'){
+          $anchor.click(function() {
+            return false;
+          });
+        }
         $anchor.mouseleave(function() {
           setTimeout(function() {
             if(!$dialog.hasClass('hover')) {
