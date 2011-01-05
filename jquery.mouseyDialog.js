@@ -33,7 +33,7 @@ jQuery mouseyDialog Plugin
    
     return this.each(function() { 
       var $anchor = $(this),
-          $url = $anchor.attr('href'),
+          $url = $anchor.attr(settings.source),
           $dialog = getID($url);
           
       if(settings.eventType == 'click') {
@@ -198,6 +198,7 @@ jQuery mouseyDialog Plugin
     addOffset:10,
     animation:'fade',
     animationSpeed:250,
-    customClass:'mouseyDialog'
+    customClass:'mouseyDialog',
+    source:'href'
   };
 })(jQuery);
