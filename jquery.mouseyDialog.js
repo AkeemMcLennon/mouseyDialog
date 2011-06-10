@@ -33,8 +33,7 @@ jQuery mouseyDialog Plugin
    
     return this.each(function() { 
       var $anchor = $(this),
-          $url = $anchor.attr(settings.source),
-          $dialog = (settings.target == 'id') ? getID($url) : $(settings.target);
+          $dialog = (settings.target == 'href') ? getID() : $(settings.target);
       
       if(settings.eventType == 'click') {
         var $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text('close');
@@ -163,7 +162,7 @@ jQuery mouseyDialog Plugin
       // Private functions //
       ///////////////////////
       function getID(url) {
-        var id = url.split("#");       
+        var id = $anchor.attr('href').split("#");       
         return $('#' + id[1]);
       };
       
@@ -204,7 +203,6 @@ jQuery mouseyDialog Plugin
     animation:'fade',
     animationSpeed:250,
     customClass:'mouseyDialog',
-    source:'href',
-    target:'id'
+    target:'href'
   };
 })(jQuery);
