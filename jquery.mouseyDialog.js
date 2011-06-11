@@ -36,7 +36,7 @@ jQuery mouseyDialog Plugin
           $dialog = (settings.target == 'href') ? getID() : $(settings.target);
       
       if(settings.eventType == 'click') {
-        var $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text('close');
+        var $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text(settings.closeText);
         if($dialog.find('.mouseyDialog_close').length == 0) {
           $closeButton.appendTo($dialog);
         }
@@ -206,6 +206,7 @@ jQuery mouseyDialog Plugin
     animation:'fade',
     animationSpeed:250,
     customClass:'mouseyDialog',
+    closeText:'close',
     target:'href'
   };
 })(jQuery);
