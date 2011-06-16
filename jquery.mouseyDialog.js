@@ -41,7 +41,7 @@ jQuery mouseyDialog Plugin
           $closeButton.appendTo($dialog);
         }
       }
-      console.log($anchor)
+      
       ///////////
       // Setup //
       ///////////
@@ -62,7 +62,7 @@ jQuery mouseyDialog Plugin
         }
               
         if($anchor.hasClass('mouseyOn')) {
-          closeDialog($anchor, $dialog);
+          closeDialog($anchor, $dialog, true);
         } else {
           setTimeout(function() {
             if($anchor.hasClass('hover')) {
@@ -111,7 +111,7 @@ jQuery mouseyDialog Plugin
             onAnchor = $('a.mouseyOn');
             
         if(openDialog.length == 1 && openDialog != $dialog) {
-          closeDialog(onAnchor, openDialog);
+          closeDialog(onAnchor, openDialog, true);
         }
         
         return false;
@@ -126,7 +126,7 @@ jQuery mouseyDialog Plugin
         $anchor.mouseleave(function() {
           setTimeout(function() {
             if(!$dialog.hasClass('hover')) {
-              closeDialog($anchor, $dialog);
+              closeDialog($anchor, $dialog, true);
             }
           }, 150);
         });
@@ -136,7 +136,7 @@ jQuery mouseyDialog Plugin
           }, 
           function() {
             $(this).removeClass('hover');
-            closeDialog($anchor, this);
+            closeDialog($anchor, this, true);
           }
         );
       } else {
@@ -153,7 +153,7 @@ jQuery mouseyDialog Plugin
         $(document).click(function(event) {
           if(event.target != this) {
             if($dialog.hasClass('mouseyVisible')) {
-              closeDialog($anchor, $dialog);
+              closeDialog($anchor, $dialog, false);
             }
           } 
         });
@@ -184,15 +184,19 @@ jQuery mouseyDialog Plugin
           $(this).addClass('mouseyVisible');
           $(anchor).addClass('mouseyOn');
         });
+         
         settings.openCallback.call();
       };
 
-      function closeDialog(anchor, dialog) {
+      function closeDialog(anchor, dialog, targetClose) {
         var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
         $(dialog)[animation](settings.animationSpeed, function() {
           $(this).removeClass('mouseyVisible');
           $(anchor).removeClass('mouseyOn');
-          settings.closeCallback.call();          
+
+          if(targetClose == true) {
+            settings.closeCallback.call(); 
+          }
         });
       };
     });
