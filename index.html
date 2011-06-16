@@ -71,11 +71,21 @@
     
     <div class="container">   
       <h2>Target one dialog from Multiple links (click)</h2>
-      <p>Hovering over this anchor will make the dialog appear. This also uses the 'slide' effect for demoing purposes. You can mix and match eventTypes and animations. If you happen to move too quickly and the mouse lands on the dialog, it will stay open until your mouse leaves the dialog area.</p>
-      <a href="#" class="four four_one">example 4</a>
-      <a href="#" class="four four_two">example 4</a>
+      <p>Multiple triggers can show the same dialog content.</p>
+      <a href="#" class="four four_one">example 4.1</a>
+      <a href="#" class="four four_two">example 4.2</a>
       <div id="example4">
         This is one mouseyDialog targeted by more than one link.
+      </div>
+    </div>
+    
+    
+    <div class="container">   
+      <h2>Open and Class callbacks</h2>
+      <p>There are open and close callback functions available as well.</p>
+      <a href="#example5" class="five">example 5</a>
+      <div id="example5">
+        This should fire an alert on open and an alert on close.
       </div>
     </div>
     
@@ -99,6 +109,15 @@
         
         $('.four').mouseyDialog({
           target:'#example4'
+        });
+        
+        $('.five').mouseyDialog({
+          openCallback:function() {
+            alert('Hello!');
+          },
+          closeCallback:function() {
+            alert('Goodbye!');
+          }
         });
       });
     </script>
