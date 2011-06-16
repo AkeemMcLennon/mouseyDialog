@@ -29,18 +29,12 @@ jQuery mouseyDialog Plugin
 */
 (function($){
   $.fn.mouseyDialog = function(options) { 
-    var settings = $.extend({}, $.fn.mouseyDialog.defaults, options); 
-   
-    return this.each(function() { 
+    var settings = $.extend({}, $.fn.mouseyDialog.defaults, options);
+  
+    return this.each(function(index) { 
       var $anchor = $(this),
-          $dialog = (settings.target == 'href') ? getID() : $(settings.target);
-      
-      if(settings.eventType == 'click') {
-        var $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text(settings.closeText);
-        if($dialog.find('.mouseyDialog_close').length == 0) {
-          $closeButton.appendTo($dialog);
-        }
-      }
+          $dialog = getID(),
+          $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text(settings.closeText);
       
       ///////////
       // Setup //
@@ -60,9 +54,9 @@ jQuery mouseyDialog Plugin
         if(settings.eventType == 'hover') {
           timeout = 250;
         }
-              
+        
         if($anchor.hasClass('mouseyOn')) {
-          closeDialog($anchor, $dialog, true);
+          closeDialog($anchor, $dialog);
         } else {
           setTimeout(function() {
             if($anchor.hasClass('hover')) {
@@ -104,15 +98,15 @@ jQuery mouseyDialog Plugin
         if((dialogHeight + clientY) > windowHeight) {
           y = mouseY-settings.addOffset-((dialogHeight + clientY)-windowHeight);
         }
-        
-        $(this).trigger('toggleDialog', [x, y]);
-        
-        var openDialog = $('.mouseyDialog.mouseyVisible'),
+      
+        var openedDialog = $('.mouseyDialog.mouseyVisible'),
             onAnchor = $('a.mouseyOn');
             
-        if(openDialog.length == 1 && openDialog != $dialog) {
-          closeDialog(onAnchor, openDialog, true);
+        if(openedDialog.length == 1 && openedDialog != $dialog) {
+          closeDialog(onAnchor, openedDialog);
         }
+        
+        $(this).trigger('toggleDialog', [x, y]);
         
         return false;
       });
@@ -126,7 +120,7 @@ jQuery mouseyDialog Plugin
         $anchor.mouseleave(function() {
           setTimeout(function() {
             if(!$dialog.hasClass('hover')) {
-              closeDialog($anchor, $dialog, true);
+              $anchor.trigger('toggleDialog');
             }
           }, 150);
         });
@@ -136,7 +130,7 @@ jQuery mouseyDialog Plugin
           }, 
           function() {
             $(this).removeClass('hover');
-            closeDialog($anchor, this, true);
+            $anchor.trigger('toggleDialog');
           }
         );
       } else {
@@ -153,7 +147,7 @@ jQuery mouseyDialog Plugin
         $(document).click(function(event) {
           if(event.target != this) {
             if($dialog.hasClass('mouseyVisible')) {
-              closeDialog($anchor, $dialog, false);
+              $anchor.trigger('toggleDialog');
             }
           } 
         });
@@ -184,20 +178,18 @@ jQuery mouseyDialog Plugin
           $(this).addClass('mouseyVisible');
           $(anchor).addClass('mouseyOn');
         });
-         
+        if(settings.eventType == 'click') { $closeButton.appendTo($dialog); }   
         settings.openCallback.call();
       };
 
-      function closeDialog(anchor, dialog, targetClose) {
+      function closeDialog(anchor, dialog) {
         var animation = (settings.animation == 'slide' ? 'slideUp' : 'fadeOut');
         $(dialog)[animation](settings.animationSpeed, function() {
           $(this).removeClass('mouseyVisible');
           $(anchor).removeClass('mouseyOn');
-
-          if(targetClose == true) {
-            settings.closeCallback.call(); 
-          }
+          settings.closeCallback.call(); 
         });
+        if(settings.eventType == 'click') { $closeButton.detach(); } 
       };
     });
   };
