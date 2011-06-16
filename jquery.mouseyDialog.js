@@ -41,7 +41,7 @@ jQuery mouseyDialog Plugin
           $closeButton.appendTo($dialog);
         }
       }
-
+      console.log($anchor)
       ///////////
       // Setup //
       ///////////
@@ -184,6 +184,7 @@ jQuery mouseyDialog Plugin
           $(this).addClass('mouseyVisible');
           $(anchor).addClass('mouseyOn');
         });
+        settings.openCallback.call();
       };
 
       function closeDialog(anchor, dialog) {
@@ -191,6 +192,7 @@ jQuery mouseyDialog Plugin
         $(dialog)[animation](settings.animationSpeed, function() {
           $(this).removeClass('mouseyVisible');
           $(anchor).removeClass('mouseyOn');
+          settings.closeCallback.call();          
         });
       };
     });
@@ -207,6 +209,8 @@ jQuery mouseyDialog Plugin
     animationSpeed:250,
     customClass:'mouseyDialog',
     closeText:'close',
-    target:'href'
+    target:'href',
+    openCallback:function() {},
+    closeCallback:function() {}
   };
 })(jQuery);
