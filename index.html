@@ -49,12 +49,12 @@
     <div class="container"> 
       <h2>eventType: click</h2>   
       <p>Clicking on the anchor opens the dialog. Clicking "close" or outside the dialog closes it. Clicking inside the dialog stops the propagation.</p>
-      <a href="#example1" class="one">example 1</a>
+      <a href="#example1" class="one">example 1.1</a>
       <div id="example1">
         This is an example of a mouseyDialog.
       </div>
       
-      <a href="#example2" class="one">example 2</a>
+      <a href="#example2" class="one">example 1.2</a>
       <div id="example2">
         This is another example. See how easy this is? It also closed the other one if it was open.
       </div>
@@ -63,7 +63,16 @@
     <div class="container">   
       <h2>eventType: hover</h2>
       <p>Hovering over this anchor will make the dialog appear. This also uses the 'slide' effect for demoing purposes. You can mix and match eventTypes and animations. If you happen to move too quickly and the mouse lands on the dialog, it will stay open until your mouse leaves the dialog area.</p>
-      <a href="#example3" class="two">example 3</a>
+      <a href="#example2" class="two">example 2</a>
+      <div id="example2">
+        This is another example of mouseyDialog. It's just here to have another one on the page. Also, this closed one of the other dialogs if you had it opened.
+      </div>
+    </div>
+    
+    <div class="container">   
+      <h2>Triggering a dialog without an anchor</h2>
+      <p>You can trigger a dialog not through an anchor, but you must define the target through the options.</p>
+      <p class="three">example 3</p>
       <div id="example3">
         This is another example of mouseyDialog. It's just here to have another one on the page. Also, this closed one of the other dialogs if you had it opened.
       </div>
@@ -99,12 +108,18 @@
         // addOffset:10,
         // animation:'fade',
         // animationSpeed:250
+        
         $('.one').mouseyDialog();
         
         $('.two').mouseyDialog({
           eventType:'hover',
           animation:'slide',
           animationSpeed:100
+        });
+        
+        $('.three').mouseyDialog({
+          eventType:'hover',
+          target:'#example3'
         });
         
         $('.four').mouseyDialog();
