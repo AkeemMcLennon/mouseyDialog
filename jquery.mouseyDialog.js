@@ -5,7 +5,7 @@ jQuery mouseyDialog Plugin
   * URL: http://github.com/mdbiscan/mouseyDialog
   * Author: M.Biscan
   * requires jQuery1.4.2
-  
+
   Copyright (c) 2010 M.Biscan
 
   Permission is hereby granted, free of charge, to any person obtaining
@@ -28,14 +28,14 @@ jQuery mouseyDialog Plugin
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 (function($){
-  $.fn.mouseyDialog = function(options) { 
+  $.fn.mouseyDialog = function(options) {
     var settings = $.extend({}, $.fn.mouseyDialog.defaults, options);
-  
-    return this.each(function(index) { 
+
+    return this.each(function(index) {
       var $anchor = $(this),
-          $dialog = (settings.target == 'href') ? getID() : $(settings.target),
+          $dialog = (settings.target.indexOf('#') == -1) ? getID() : $(settings.target)
           $closeButton = $('<a>').attr('href','#').addClass('mouseyDialog_close').text(settings.closeText);
-      
+
       ///////////
       // Setup //
       ///////////
@@ -44,7 +44,7 @@ jQuery mouseyDialog Plugin
         .css({position:'absolute', zIndex:settings.zIndex})
         .addClass(settings.customClass)
         .appendTo('body');
-      
+
       ////////////
       // Events //
       ////////////
@@ -54,7 +54,7 @@ jQuery mouseyDialog Plugin
         if(settings.eventType == 'hover') {
           timeout = 250;
         }
-        
+
         if($anchor.hasClass('mouseyOn')) {
           closeDialog($anchor, $dialog);
         } else {
@@ -67,50 +67,50 @@ jQuery mouseyDialog Plugin
       }).hover(
         function() {
           $(this).addClass('hover');
-        }, 
+        },
         function() {
           $(this).removeClass('hover');
         }
       );
-      
+
       var eventType = (settings.eventType == 'hover' ? 'mouseenter' : 'click');
-      
+
       $anchor[eventType](function(event) {
             // Window
         var windowWidth = $(window).width(),
             windowHeight = $(window).height();
             // Screen
-        var clientX = event.clientX, 
+        var clientX = event.clientX,
             clientY = event.clientY;
             // Dialog
         var dialogWidth = getDialogDimensions().width,
             dialogHeight = getDialogDimensions().height;
-            // Mouse 
-        var mouseX = event.pageX, 
+            // Mouse
+        var mouseX = event.pageX,
             mouseY = event.pageY;
             // X, Y
         var x = mouseX+settings.addOffset,
             y = mouseY+settings.addOffset;
-            
+
         if((dialogWidth + clientX) > windowWidth) {
           x = mouseX-settings.addOffset-((dialogWidth + clientX)-windowWidth);
-        } 
+        }
         if((dialogHeight + clientY) > windowHeight) {
           y = mouseY-settings.addOffset-((dialogHeight + clientY)-windowHeight);
         }
-      
+
         var openedDialog = $('.mouseyDialog.mouseyVisible'),
             onAnchor = $('a.mouseyOn');
-            
+
         if(openedDialog.length == 1 && openedDialog != $dialog) {
           closeDialog(onAnchor, openedDialog);
         }
-        
+
         $(this).trigger('toggleDialog', [x, y]);
-        
+
         return false;
       });
-      
+
       if(settings.eventType == 'hover') {
         if(settings.source == 'href'){
           $anchor.click(function() {
@@ -127,7 +127,7 @@ jQuery mouseyDialog Plugin
         $dialog.hover(
           function() {
             $(this).addClass('hover');
-          }, 
+          },
           function() {
             $(this).removeClass('hover');
             $anchor.trigger('toggleDialog');
@@ -136,7 +136,7 @@ jQuery mouseyDialog Plugin
       } else {
         $closeButton.click(function() {
           $anchor.trigger('toggleDialog');
-          return false; 
+          return false;
         });
 
         // Prevents the dialog from being closed when clicking inside it
@@ -149,36 +149,36 @@ jQuery mouseyDialog Plugin
             if($dialog.hasClass('mouseyVisible')) {
               $anchor.trigger('toggleDialog');
             }
-          } 
+          }
         });
       }
-      
+
       ///////////////////////
       // Private functions //
       ///////////////////////
       function getID(url) {
-        var id = $anchor.attr('href').split("#");       
+        var id = $anchor.attr(settings.target).split("#");
         return $('#' + id[1]);
       };
-      
+
       function getDialogDimensions() {
         $dialog.show();
-        
+
         var height = $dialog.innerHeight(),
             width = $dialog.innerWidth();
-        
+
         $dialog.hide();
-        
+
         return {height:height, width:width};
       };
-      
+
       function openDialog(anchor, dialog, x, y) {
         var animation = (settings.animation == 'slide' ? 'slideDown' : 'fadeIn');
         $(dialog).css({top:y, left:x})[animation](settings.animationSpeed, function() {
           $(this).addClass('mouseyVisible');
           $(anchor).addClass('mouseyOn');
         });
-        if(settings.eventType == 'click') { $closeButton.appendTo($dialog); }   
+        if(settings.eventType == 'click') { $closeButton.appendTo($dialog); }
         settings.openCallback.call();
       };
 
@@ -187,9 +187,9 @@ jQuery mouseyDialog Plugin
         $(dialog)[animation](settings.animationSpeed, function() {
           $(this).removeClass('mouseyVisible');
           $(anchor).removeClass('mouseyOn');
-          settings.closeCallback.call(); 
+          settings.closeCallback.call();
         });
-        if(settings.eventType == 'click') { $closeButton.detach(); } 
+        if(settings.eventType == 'click') { $closeButton.detach(); }
       };
     });
   };
